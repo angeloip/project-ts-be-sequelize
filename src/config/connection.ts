@@ -17,7 +17,7 @@ const checkDBConnection = async () => {
 export const checkSync = async () => {
   try {
     await checkDBConnection()
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ alter: true });
     console.log('All models were synchronized successfully.');
   } catch (error) {
     console.error('Unable to synchronize models:', error);

@@ -26,6 +26,11 @@ export const categoryController = {
   createCategory: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { name }: CategoryAttributes = req.body;
+
+      const category = await CategoryModel.findOne({ where: { name } });
+
+      if (category) return res.status(400).json({ msg: "Categoría existente" })
+
       await CategoryModel.create({ name });
 
       res.status(201).json({ msg: "Categoría creada" });
@@ -41,6 +46,10 @@ export const categoryController = {
       const category = await CategoryModel.findByPk(id);
 
       if (!category) return res.status(404).json({ msg: "Categoría no existente" })
+
+      const categoryExist = await CategoryModel.findOne({ where: { name } });
+
+      if (categoryExist) return res.status(400).json({ msg: "Categoría existente" })
 
       await category.update({ name });
 

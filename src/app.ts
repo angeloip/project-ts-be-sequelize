@@ -5,7 +5,6 @@ import cookieParser from 'cookie-parser'
 import { router } from './routes'
 import { checkSync } from './config/connection'
 
-
 const PORT = process.env.PORT || 5000
 const app = express()
 
@@ -14,7 +13,6 @@ app.use(express.json())
 app.use(cookieParser())
 
 checkSync()
-
 
 app.use(router)
 
