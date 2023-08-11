@@ -12,6 +12,7 @@ interface ProductAttributes {
   discountPercentage?: number
   rating?: number
   stock: number
+  categoryId?: string
   thumbnail?: Thumbnail
 }
 
@@ -26,3 +27,11 @@ interface ProductCreationAttributes
 export interface Product
   extends Model<ProductAttributes, ProductCreationAttributes>,
     ProductAttributes {}
+
+export interface QueryParams {
+  name: string
+  key: string
+  order: string
+  min: string
+  max: string
+}

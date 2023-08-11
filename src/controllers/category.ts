@@ -1,74 +1,78 @@
 import { NextFunction, Request, Response } from 'express'
-import { CategoryAttributes } from '../interfaces/category';
-import { CategoryModel } from '../models/category';
+import { CategoryAttributes } from '../interfaces/category'
+import { CategoryModel } from '../models/category'
 
 export const categoryController = {
   getCategories: async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      const categories = await CategoryModel.findAll();
-      return res.json(categories);
+      const categories = await CategoryModel.findAll()
+      return res.json(categories)
     } catch (error) {
       next(error)
     }
   },
   getCategory: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id } = req.params;
-      const category = await CategoryModel.findByPk(id);
+      const { id } = req.params
+      const category = await CategoryModel.findByPk(id)
 
-      if (!category) return res.status(404).json({ msg: "Categoría no existente" })
+      if (!category)
+        return res.status(404).json({ msg: 'Categoría no existente' })
 
-      return res.status(200).json(category);
+      return res.status(200).json(category)
     } catch (error) {
       next(error)
     }
   },
   createCategory: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { name }: CategoryAttributes = req.body;
+      const { name }: CategoryAttributes = req.body
 
-      const category = await CategoryModel.findOne({ where: { name } });
+      const category = await CategoryModel.findOne({ where: { name } })
 
-      if (category) return res.status(400).json({ msg: "Categoría existente" })
+      if (category) return res.status(400).json({ msg: 'Categoría existente' })
 
-      await CategoryModel.create({ name });
+      await CategoryModel.create({ name })
 
-      res.status(201).json({ msg: "Categoría creada" });
+      return res.status(201).json({ msg: 'Categoría creada' })
     } catch (error) {
       next(error)
     }
   },
   updateCategory: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id } = req.params;
-      const { name }: CategoryAttributes = req.body;
+      const { id } = req.params
+      const { name }: CategoryAttributes = req.body
 
-      const category = await CategoryModel.findByPk(id);
+      const category = await CategoryModel.findByPk(id)
 
-      if (!category) return res.status(404).json({ msg: "Categoría no existente" })
+      if (!category)
+        return res.status(404).json({ msg: 'Categoría no existente' })
 
-      const categoryExist = await CategoryModel.findOne({ where: { name } });
+      const categoryExist = await CategoryModel.findOne({ where: { name } })
 
-      if (categoryExist) return res.status(400).json({ msg: "Categoría existente" })
+      if (categoryExist)
+        return res.status(400).json({ msg: 'Categoría existente' })
 
-      await category.update({ name });
+      await category.update({ name })
 
-      return res.status(200).json({ msg: "Categoría actualizada" });
+      return res.status(200).json({ msg: 'Categoría actualizada' })
     } catch (error) {
       next(error)
     }
   },
   deleteCategory: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id } = req.params;
+      const { id } = req.params
 
-      const category = await CategoryModel.findByPk(id);
+      const category = await CategoryModel.findByPk(id)
 
-      if (!category) return res.status(404).json({ msg: "Categoría no existente" })
+      if (!category)
+        return res.status(404).json({ msg: 'Categoría no existente' })
 
-      await category.destroy();
+      await category.destroy()
 
-      return res.status(200).json({ msg: "Categoría eliminada" });
+      return res.status(200).json({ msg: 'Categoría eliminada' })
     } catch (error) {
       next(error)
     }
